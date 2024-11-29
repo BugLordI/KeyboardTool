@@ -1,0 +1,9 @@
+D:\tools\KeyboardTool\KeyboardTool\bin\Debug\netstandard2.1\KeyboardTool.deps.json
+D:\tools\KeyboardTool\KeyboardTool\bin\Debug\netstandard2.1\KeyboardTool.dll
+D:\tools\KeyboardTool\KeyboardTool\bin\Debug\netstandard2.1\KeyboardTool.pdb
+D:\tools\KeyboardTool\KeyboardTool\obj\Debug\netstandard2.1\KeyboardTool.GeneratedMSBuildEditorConfig.editorconfig
+D:\tools\KeyboardTool\KeyboardTool\obj\Debug\netstandard2.1\KeyboardTool.AssemblyInfoInputs.cache
+D:\tools\KeyboardTool\KeyboardTool\obj\Debug\netstandard2.1\KeyboardTool.AssemblyInfo.cs
+D:\tools\KeyboardTool\KeyboardTool\obj\Debug\netstandard2.1\KeyboardTool.csproj.CoreCompileInputs.cache
+D:\tools\KeyboardTool\KeyboardTool\obj\Debug\netstandard2.1\KeyboardTool.dll
+D:\tools\KeyboardTool\KeyboardTool\obj\Debug\netstandard2.1\KeyboardTool.pdb
