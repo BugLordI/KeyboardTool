@@ -70,7 +70,7 @@ namespace KeyboardTool
         {
             if (nCode >= 0)
             {
-                if (wParam == (IntPtr)KeysActionEnum.WM_KEYDOWN)
+                if (wParam == (IntPtr)KeysActionEnum.KEYDOWN)
                 {
                     int vkCode = Marshal.ReadInt32(lParam);
                     if (Enum.TryParse(vkCode.ToString(), out ModifierKeysEnum modifierKeysEnum)

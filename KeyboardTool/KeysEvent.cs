@@ -5,18 +5,17 @@
  * Author:  BugZhang(BugLordl)
  * Url:     https://github.com/BugLordI/KeyboardTool
  */
+using KeyboardTool.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace KeyboardTool.Enums
+namespace KeyboardTool
 {
-    /// <summary>
-    /// Keydown or Keyup
-    /// </summary>
-    public enum KeysActionEnum
+    public class KeysEvent
     {
-        KEYDOWN = 0x0100,
-        KEYUP = 0x0101,
+        public KeysEnum Key { get; set; }
+        public ModifierKeysEnum ModifierKey { get; set; }
+        public KeysActionEnum KeysAction { get; set; }
     }
 }

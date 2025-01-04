@@ -4,7 +4,7 @@ using System.Text;
 
 namespace KeyboardTool.Enums
 {
-    internal enum ModifierKeysEnum
+    public enum ModifierKeysEnum
     {
         LSHIFT = 0xA0,
         RSHIFT = 0xA1,
@@ -14,5 +14,6 @@ namespace KeyboardTool.Enums
         RMENU = 0xA5,
         LWIN = 0x5B,
         RWIN = 0x5C,
+        NONE = 0
     }
 }

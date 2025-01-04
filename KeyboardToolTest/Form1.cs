@@ -21,8 +21,32 @@ namespace KeyboardToolTest
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Keyboard keyboard = new Keyboard();
-            keyboard.RegisterKey(KeysEnum.A);
+            String hookId = KeyboardFactory.RegisterKey(KeysEnum.A, (e, a) =>
+            {
+                KeysEvent keysEvent = e as KeysEvent;
+                String str = $"{keysEvent.KeysAction}：{keysEvent.Key}";
+                if (keysEvent.ModifierKey != ModifierKeysEnum.NONE)
+                {
+                    str = $"{keysEvent.KeysAction}：{keysEvent.ModifierKey} + {keysEvent.Key}";
+                }
+                richTextBox1.AppendText(str + "\n");
+            });
+            richTextBox1.AppendText($"注册按键：{KeysEnum.A}\n");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            String hookId = KeyboardFactory.RegisterKey(KeysEnum.R, (e, a) =>
+            {
+                KeysEvent keysEvent = e as KeysEvent;
+                String str = $"{keysEvent.KeysAction}：{keysEvent.Key}";
+                if (keysEvent.ModifierKey != ModifierKeysEnum.NONE)
+                {
+                    str = $"{keysEvent.KeysAction}：{keysEvent.ModifierKey} + {keysEvent.Key}";
+                }
+                richTextBox1.AppendText(str + "\n");
+            }, modifierKeyCode: KeysEnum.LCONTROL);
+            richTextBox1.AppendText($"注册按键：{KeysEnum.LCONTROL}+{KeysEnum.R}\n");
         }
     }
 }

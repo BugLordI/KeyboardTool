@@ -19,6 +19,9 @@ namespace KeyboardTool
 {
     internal class KeyboardHooks : IDisposable
     {
+        public Action<Object, Object>? KeysEventCallback { private get; set; }
+        public Action<String>? CallbackError { private get; set; }
+
         #region
         private const int WH_KEYBOARD_LL = 13;
 
@@ -44,9 +47,11 @@ namespace KeyboardTool
         private int keyCode;
         private int modifierKeyCode;
         private int keysAction;
+        private String hookId;
 
-        public KeyboardHooks(KeysEnum keyCode, KeysEnum modifierKeyCode, KeysActionEnum keysAction)
+        public KeyboardHooks(String hookId, KeysEnum keyCode, KeysEnum modifierKeyCode, KeysActionEnum keysAction)
         {
+            this.hookId = hookId;
             this.keyCode = (int)keyCode;
             this.modifierKeyCode = (int)modifierKeyCode;
             this.keysAction = (int)keysAction;
@@ -81,13 +86,14 @@ namespace KeyboardTool
                 int vkCode = Marshal.ReadInt32(lParam);
                 if (nCode >= 0 && wParam == (IntPtr)keysAction)
                 {
+                    Enum.TryParse<KeysActionEnum>(keysAction.ToString(), out KeysActionEnum keysActionEnum);
                     if (modifierKeyCode != (int)KeysEnum.NONE)
                     {
                         if (vkCode == keyCode && ModifierKeys.Key == modifierKeyCode)
                         {
                             Enum.TryParse<KeysEnum>(vkCode.ToString(), out KeysEnum k);
                             Enum.TryParse<ModifierKeysEnum>(ModifierKeys.Key.ToString(), out ModifierKeysEnum mk);
-                            Trace.WriteLine($"按下了{mk.ToString()}+{k.ToString()}");
+                            KeysEventCallback?.Invoke(new KeysEvent { Key = k, ModifierKey = mk, KeysAction = keysActionEnum }, "");
                         }
                     }
                     else
@@ -95,7 +101,7 @@ namespace KeyboardTool
                         if (vkCode == keyCode)
                         {
                             Enum.TryParse<KeysEnum>(keyCode.ToString(), out KeysEnum k);
-                            Trace.WriteLine($"按下了{k.ToString()}");
+                            KeysEventCallback?.Invoke(new KeysEvent { Key = k, ModifierKey = ModifierKeysEnum.NONE, KeysAction = keysActionEnum }, "");
                         }
                     }
                 }
