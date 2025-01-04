@@ -3,6 +3,23 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>KeyboardTool</Title>
+    <Company>BugLordI</Company>
+    <Copyright>Copyright (c) 2024 BugZhang(BugLordl). All rights reserved.</Copyright>
+    <PackageProjectUrl> https://github.com/BugLordI/KeyboardTool</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl> https://github.com/BugLordI/KeyboardTool</RepositoryUrl>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+	<Authors>BugLordI</Authors>
+	<Description>For keypress monitoring</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
