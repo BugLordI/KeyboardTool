@@ -10,9 +10,11 @@
     <PackageProjectUrl> https://github.com/BugLordI/KeyboardTool</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl> https://github.com/BugLordI/KeyboardTool</RepositoryUrl>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
 	<Authors>BugLordI</Authors>
 	<Description>For keypress monitoring</Description>
+	<FileVersion>1.0.0.1</FileVersion>
+	<Version>1.0.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
