@@ -6,9 +6,6 @@
  * Url:     https://github.com/BugLordI/KeyboardTool
  */
 using KeyboardTool.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace KeyboardTool
 {

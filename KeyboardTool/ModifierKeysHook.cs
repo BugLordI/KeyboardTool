@@ -8,12 +8,8 @@
 using KeyboardTool.Enums;
 using KeyboardTool.Tools;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection.Emit;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Input;
 
 namespace KeyboardTool
 {

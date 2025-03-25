@@ -5,10 +5,6 @@
  * Author:  BugZhang(BugLordl)
  * Url:     https://github.com/BugLordI/KeyboardTool
  */
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace KeyboardTool.Enums
 {
     /// <summary>
