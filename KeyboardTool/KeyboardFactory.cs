@@ -26,7 +26,9 @@ namespace KeyboardTool
         /// <param name="keysAction">keyup or keydown</param>
         /// <param name="callback">Key event callback</param>
         /// <returns>The hookId id specified if null return function full name</returns>
-        public static String RegisterKey(KeysEnum keyCode, Action<Object, Object> callback, String? hookId = null, KeysEnum? modifierKeyCode = null, KeysActionEnum keysAction = KeysActionEnum.KEYDOWN)
+        public static String RegisterKey(KeysEnum keyCode, Action<Object, Object> callback, String? hookId = null,
+            ModifierKeysEnum modifierKeyCode = ModifierKeysEnum.NONE,
+            KeysActionEnum keysAction = KeysActionEnum.KEYDOWN)
         {
             if (hookId == null)
             {
@@ -38,8 +40,8 @@ namespace KeyboardTool
                 hookId = $"{className}.{methodName}";
             }
             String key = hookId;
-            KeysConfigFile.SaveKey(BitConverter.GetBytes((int)keyCode), BitConverter.GetBytes((int)(modifierKeyCode ?? 0)), BitConverter.GetBytes((int)keysAction));
-            KeyboardHooks hooks = new KeyboardHooks(key, keyCode, modifierKeyCode ?? KeysEnum.NONE, keysAction);
+            KeysConfigFile.SaveKey(BitConverter.GetBytes((int)keyCode), BitConverter.GetBytes((int)(modifierKeyCode)), BitConverter.GetBytes((int)keysAction));
+            KeyboardHooks hooks = new KeyboardHooks(key, keyCode, modifierKeyCode, keysAction);
             hooks.KeysEventCallback = callback;
             hooks.CallbackError = callbackError;
             hooksMap.Add(key, hooks);
@@ -58,6 +60,16 @@ namespace KeyboardTool
                 hooks.Dispose();
                 hooksMap.Remove(hookId);
             }
+        }
+
+        public static String OnKeyPressed(Action<Object> callback)
+        {
+            String key = "OnKeyPressedListener";
+            KeyboardHooks hooks = new KeyboardHooks(key);
+            hooks.AllKeysEventCallback = callback;
+            hooks.CallbackError = callbackError;
+            hooksMap.Add(key, hooks);
+            return key;
         }
 
         private static void callbackError(String hookId)

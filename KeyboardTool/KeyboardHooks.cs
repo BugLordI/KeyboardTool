@@ -16,13 +16,16 @@ namespace KeyboardTool
     internal class KeyboardHooks : IDisposable
     {
         public Action<Object, Object>? KeysEventCallback { private get; set; }
+
+        public Action<Object>? AllKeysEventCallback { private get; set; }
+
         public Action<String>? CallbackError { private get; set; }
 
         #region
         private const int WH_KEYBOARD_LL = 13;
 
-        private LowLevelKeyboardProc _proc;
-        private IntPtr _hookID = IntPtr.Zero;
+        private LowLevelKeyboardProc _keys_proc;
+        private IntPtr _keys_hook_Id = IntPtr.Zero;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
@@ -40,30 +43,36 @@ namespace KeyboardTool
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
         #endregion
 
+        private String id;
         private int keyCode;
         private int modifierKeyCode;
         private int keysAction;
-        private String hookId;
 
-        public KeyboardHooks(String hookId, KeysEnum keyCode, KeysEnum modifierKeyCode, KeysActionEnum keysAction)
+        public KeyboardHooks(String hookId, KeysEnum keyCode, ModifierKeysEnum modifierKeyCode, KeysActionEnum keysAction)
         {
-            this.hookId = hookId;
+            this.id = hookId;
             this.keyCode = (int)keyCode;
             this.modifierKeyCode = (int)modifierKeyCode;
             this.keysAction = (int)keysAction;
-            new ModifierKeysHook();
-            _proc = HookCallback;
-            _hookID = SetHook(_proc);
+            _keys_proc = KeysHookCallback;
+            _keys_hook_Id = SetHook(_keys_proc);
+        }
+
+        public KeyboardHooks(String hookId)
+        {
+            this.id = hookId;
+            _keys_proc = KeysHookCallback;
+            _keys_hook_Id = SetHook(_keys_proc);
         }
 
         ~KeyboardHooks()
         {
-            UnhookWindowsHookEx(_hookID);
+            UnhookWindowsHookEx(_keys_hook_Id);
         }
 
         public void Dispose()
         {
-            UnhookWindowsHookEx(_hookID);
+            UnhookWindowsHookEx(_keys_hook_Id);
         }
 
         private IntPtr SetHook(LowLevelKeyboardProc proc)
@@ -75,34 +84,52 @@ namespace KeyboardTool
             }
         }
 
-        private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private IntPtr KeysHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (keyCode != (int)KeysEnum.NONE)
+            int vkCode = Marshal.ReadInt32(lParam);
+            KeysActionEnum keysActionEnum = ((int)wParam).ParseToEnum<KeysActionEnum>();
+            KeysEnum key = vkCode.ParseToEnum<KeysEnum>();
+            ModifierKeysEnum mk = ModifierKeysMap.GetModifierKeysEnum(vkCode);
+            if (key != KeysEnum.NONE)
             {
-                int vkCode = Marshal.ReadInt32(lParam);
-                if (nCode >= 0 && wParam == (IntPtr)keysAction)
+                if (keyCode != (int)KeysEnum.NONE)
                 {
-                    Enum.TryParse<KeysActionEnum>(keysAction.ToString(), out KeysActionEnum keysActionEnum);
-                    if (modifierKeyCode != (int)KeysEnum.NONE)
+                    if (nCode >= 0 && wParam == (IntPtr)keysAction)
                     {
-                        if (vkCode == keyCode && ModifierKeys.Key == modifierKeyCode)
+                        if (modifierKeyCode != (int)KeysEnum.NONE)
                         {
-                            Enum.TryParse<KeysEnum>(vkCode.ToString(), out KeysEnum k);
-                            Enum.TryParse<ModifierKeysEnum>(ModifierKeys.Key.ToString(), out ModifierKeysEnum mk);
-                            KeysEventCallback?.Invoke(new KeysEvent { Key = k, ModifierKey = mk, KeysAction = keysActionEnum }, "");
+                            if (vkCode == keyCode && (int)ModifierKeys.Key == modifierKeyCode)
+                            {
+                                KeysEventCallback?.Invoke(new KeysEvent { Key = key, ModifierKey = ModifierKeys.Key, KeysAction = keysActionEnum }, "");
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (vkCode == keyCode)
+                        else
                         {
-                            Enum.TryParse<KeysEnum>(keyCode.ToString(), out KeysEnum k);
-                            KeysEventCallback?.Invoke(new KeysEvent { Key = k, ModifierKey = ModifierKeysEnum.NONE, KeysAction = keysActionEnum }, "");
+                            if (vkCode == keyCode)
+                            {
+                                KeysEventCallback?.Invoke(new KeysEvent { Key = key, ModifierKey = ModifierKeysEnum.NONE, KeysAction = keysActionEnum }, "");
+                            }
                         }
                     }
                 }
             }
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
+            else if (mk != ModifierKeysEnum.NONE)
+            {
+                if (wParam == (IntPtr)KeysActionEnum.KEYDOWN || wParam == (IntPtr)KeysActionEnum.WM_SYSKEYDOWN)
+                {
+                    ModifierKeys.Key |= mk;
+                }
+                else
+                {
+                    ModifierKeys.Key &= ~mk;
+                }
+            }
+            else
+            {
+                CallbackError?.Invoke(id);
+            }
+            AllKeysEventCallback?.Invoke(new KeysEvent { Key = key, ModifierKey = ModifierKeys.Key, KeysAction = keysActionEnum });
+            return CallNextHookEx(_keys_hook_Id, nCode, wParam, lParam);
         }
     }
 }

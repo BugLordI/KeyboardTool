@@ -17,6 +17,11 @@ namespace KeyboardToolTest
         public Form1()
         {
             InitializeComponent();
+            KeyboardFactory.OnKeyPressed(k =>
+            {
+                KeysEvent keysEvent = k as KeysEvent;
+                richTextBox1.AppendText($"热键：{keysEvent.ModifierKey},快捷键：{keysEvent.Key},动作：{keysEvent.KeysAction}\n");
+            });
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -45,8 +50,8 @@ namespace KeyboardToolTest
                     str = $"{keysEvent.KeysAction}：{keysEvent.ModifierKey} + {keysEvent.Key}";
                 }
                 richTextBox1.AppendText(str + "\n");
-            }, modifierKeyCode: KeysEnum.LCONTROL);
-            richTextBox1.AppendText($"注册按键：{KeysEnum.LCONTROL}+{KeysEnum.R}\n");
+            }, modifierKeyCode: ModifierKeysEnum.LCONTROL);
+            richTextBox1.AppendText($"注册按键：{ModifierKeysEnum.LCONTROL}+{KeysEnum.R}\n");
         }
     }
 }

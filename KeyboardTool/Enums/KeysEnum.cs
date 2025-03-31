@@ -81,17 +81,6 @@ namespace KeyboardTool.Enums
         F24 = 0x87,
         #endregion
 
-        #region Modifier Keys
-        LSHIFT = 0xA0,
-        RSHIFT = 0xA1,
-        LCONTROL = 0xA2,
-        RCONTROL = 0xA3,
-        LMENU = 0xA4,
-        RMENU = 0xA5,
-        LWIN = 0x5B,
-        RWIN = 0x5C,
-        #endregion
-
         #region Navigation Keys
         UP = 0x26,
         DOWN = 0x28,
@@ -116,6 +105,57 @@ namespace KeyboardTool.Enums
         CAPITAL = 0x14,
         PRINTSCREEN = 0x2C,
         PAUSE = 0x13,
+        Multiply = 0x6A, 
+        Add = 0x6B, 
+        Subtract = 0x6D, 
+        Decimal = 0x6E, 
+        Divide = 0x6F,
+        #endregion
+        #region OEM Keys
+        /// <summary>
+        /// `-` AND `_`
+        /// </summary>
+        OemMinus = 0xBD,
+        /// <summary>
+        ///  `=` AND `+`
+        /// </summary>
+        OemPlus = 0xBB,
+        /// <summary>
+        /// `[` AND `{`
+        /// </summary>
+        OemOpenBrackets = 0xDB,
+        /// <summary>
+        /// `]` AND `}`
+        /// </summary>
+        OemCloseBrackets = 0xDD,
+        /// <summary>
+        /// `\` AND `|`
+        /// </summary>
+        OemPipe = 0xDC,
+        /// <summary>
+        /// `;` AND `:`
+        /// </summary>
+        OemSemicolon = 0xBA,
+        /// <summary>
+        /// `'` AND `"`
+        /// </summary>
+        OemQuotes = 0xDE,
+        /// <summary>
+        /// `,` AND `<`
+        /// </summary>
+        OemComma = 0xBC,
+        /// <summary>
+        /// `.` AND `>`
+        /// </summary>
+        OemPeriod = 0xBE,
+        /// <summary>
+        /// `/` AND `?`
+        /// </summary>
+        OemQuestion = 0xBF,
+        /// <summary>
+        /// `` AND `~`
+        /// </summary>
+        OemTilde = 0xC0,
         #endregion
         NONE = 0
     }

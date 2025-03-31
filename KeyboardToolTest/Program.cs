@@ -14,6 +14,7 @@ namespace KeyboardToolTest
         [STAThread]
         static void Main()
         {
+            TestEnumTool.testEnumTool();
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

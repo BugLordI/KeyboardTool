@@ -10,11 +10,13 @@
     <PackageProjectUrl> https://github.com/BugLordI/KeyboardTool</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl> https://github.com/BugLordI/KeyboardTool</RepositoryUrl>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <AssemblyVersion>2.1.1</AssemblyVersion>
 	<Authors>BugLordI</Authors>
 	<Description>For keypress monitoring</Description>
-	<FileVersion>1.0.0.1</FileVersion>
-	<Version>1.0.0.1</Version>
+	<FileVersion>2.1.1</FileVersion>
+	<Version>2.1.1</Version>
+	<PackageTags>KeyboardListen;NoWinform;NoUIControl</PackageTags>
+	<PackageReleaseNotes>键盘按键监听，无需UI控件支持</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

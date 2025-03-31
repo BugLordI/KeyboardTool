@@ -5,10 +5,12 @@
  * Author:  BugZhang(BugLordl)
  * Url:     https://github.com/BugLordI/KeyboardTool
  */
+using KeyboardTool.Enums;
+
 namespace KeyboardTool.Tools
 {
     internal class ModifierKeys
     {
-        public static int? Key { get; set; }
+        public static ModifierKeysEnum Key { get; set; } = ModifierKeysEnum.NONE;
     }
 }
